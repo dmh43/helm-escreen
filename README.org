@@ -1,0 +1,17 @@
+* Intro
+Introduces support for an arbitrary number of
+named escreens as well as helm autocompletion for
+selecting escreens
+* Keybindings
+The following is in my emacs initialization:
+
+#+BEGIN_SRC emacs-lisp
+(require 'escreen)
+(require 'helm-escreen)
+(define-key escreen-map "n" 'escreen-goto-next-screen)
+(define-key escreen-map (kbd "C-\\") 'escreen-goto-last-screen)
+(define-key escreen-map "c" 'helm-escreen-create-screen)
+(define-key escreen-map "s" 'helm-escreen-select-escreen)
+(define-key escreen-map "k" 'helm-escreen-kill-escreen)
+(define-key escreen-map "r" 'helm-escreen-rename-escreen)
+#+END_SRC
