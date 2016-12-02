@@ -22,14 +22,28 @@
               helm-escreen-name-alist))
   (call-interactively 'escreen-create-screen))
 
+(defun helm-escreen-current-escreen ()
+  (rassoc escreen-current-screen-number helm-escreen-name-alist))
+
 (defun helm-escreen-select-escreen ()
   "Use helm to select an escreen."
   (interactive)
-  (escreen-goto-screen
-   (helm-comp-read "Select an escreen: "
-                   helm-escreen-name-alist
-                   :alistp t
-                   :must-match 'confirm)))
+  (let* (
+         (without-current-screen (remove (helm-escreen-current-escreen) helm-escreen-name-alist))
+         (escreen-num (helm-comp-read "Select an escreen: "
+                                      without-current-screen
+                                      :alistp t
+                                      :must-match 'confirm))
+         (escreen-cons-cell (rassoc escreen-num helm-escreen-name-alist))
+         (without-cons-cell (remove escreen-cons-cell helm-escreen-name-alist))
+         (updated-alist (cons escreen-cons-cell without-cons-cell)))
+    (setq helm-escreen-name-alist updated-alist)
+    (escreen-goto-screen escreen-num)))
+
+(let* ((escreen-cons-cell (rassoc 1 helm-escreen-name-alist))
+       (without-cons-cell (remove escreen-cons-cell helm-escreen-name-alist))
+       (updated-alist (cons escreen-cons-cell without-cons-cell)))
+  updated-alist)
 
 (defun helm-escreen-prompt-rename (escreen-name)
   "Prompt for a new ESCREEN-NAME."
