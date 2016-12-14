@@ -53,12 +53,8 @@
 (defun helm-escreen-rename-escreen ()
   "Rename an escreen.  Selection is done with helm."
   (interactive)
-  (let ((escreen-num (helm-comp-read "Select an escreen to rename:"
-                                     helm-escreen-name-alist
-                                     :alistp t
-                                     :must-match 'confirm)))
-    (setcar (rassoc escreen-num helm-escreen-name-alist)
-            (call-interactively 'helm-escreen-prompt-rename))))
+  (setcar (rassoc escreen-current-screen-number helm-escreen-name-alist)
+          (call-interactively 'helm-escreen-prompt-rename)))
 
 (defun helm-escreen-kill-escreen ()
   "Kill a named escreen with helm completion."
@@ -67,6 +63,11 @@
         (map-remove (lambda (name num) (= num escreen-current-screen-number))
                     helm-escreen-name-alist))
   (call-interactively 'escreen-kill-screen))
+
+(defun helm-escreen-current-escreen-name ()
+  "Get the name of the current screen"
+  (interactive)
+  (message (car (rassoc escreen-current-screen-number helm-escreen-name-alist))))
 
 
 (provide 'helm-escreen)
