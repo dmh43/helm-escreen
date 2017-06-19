@@ -16,7 +16,7 @@
 
 (setq-default helm-escreen-name-alist '(("main" . 0)))
 
-(add-to-list 'escreen-frame-local-variables 'helm-escreen-name-alist)
+(add-to-list 'escreen-frame-default-values 'helm-escreen-name-alist)
 
 (defun helm-escreen-create-screen (escreen-name)
   "Create a new escreen and prompt for a name (ESCREEN-NAME).  Also save it to the list of escreens."
@@ -27,7 +27,7 @@
   (call-interactively 'escreen-create-screen))
 
 (defun helm-escreen-current-escreen ()
-  (rassoc escreen-current-screen-number helm-escreen-name-alist))
+  (rassoc (escreen-current-screen-number) helm-escreen-name-alist))
 
 (defun helm-escreen-select-escreen ()
   "Use helm to select an escreen."
@@ -58,7 +58,7 @@
   "Rename an escreen.  Selection is done with helm."
   (interactive)
   (let ((new-alist (copy-alist helm-escreen-name-alist)))
-    (setcar (rassoc escreen-current-screen-number new-alist)
+    (setcar (rassoc (escreen-current-screen-number) new-alist)
             (call-interactively 'helm-escreen-prompt-rename))
     (setf helm-escreen-name-alist new-alist)))
 
@@ -66,14 +66,14 @@
   "Kill a named escreen with helm completion."
   (interactive)
   (setq helm-escreen-name-alist
-        (map-remove (lambda (name num) (= num escreen-current-screen-number))
+        (map-remove (lambda (name num) (= num (escreen-current-screen-number)))
                     helm-escreen-name-alist))
   (call-interactively 'escreen-kill-screen))
 
 (defun helm-escreen-current-escreen-name ()
   "Get the name of the current screen"
   (interactive)
-  (message (car (rassoc escreen-current-screen-number helm-escreen-name-alist))))
+  (message (car (rassoc (escreen-current-screen-number) helm-escreen-name-alist))))
 
 
 (provide 'helm-escreen)

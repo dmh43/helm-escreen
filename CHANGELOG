@@ -1,0 +1,6 @@
+2017-06-19  Dany Haddad  <danyhaddad43@gmail.com>
+
+	* helm-escreen.el: Maintain support with latest escreen escreen version 1.20
+	(escreen-frame-default-values, helm-escreen-current-escreen, helm-escreen-rename-escreen, helm-escreen-kill-escreen, helm-escreen-current-escreen-name):
+	escreen-current-screen-number is now a function
+	Frame local variables were removed from Emacs 26, as a result, escreen no longer has escreen-frame-local-variables. This has been replaced with escreen-frame-default-values

@@ -1,3 +1,4 @@
+Note: As of v1.0, ~helm-escreen~ requires ~escreen~ v1.20 which introduced a few breaking changes needed to maintain support for Emacs 26.
 * Intro
 Introduces support for an arbitrary number of
 named escreens as well as helm autocompletion for
