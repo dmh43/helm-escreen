@@ -32,8 +32,7 @@
 (defun helm-escreen-select-escreen ()
   "Use helm to select an escreen."
   (interactive)
-  (let* (
-         (without-current-screen (remove (helm-escreen-current-escreen) helm-escreen-name-alist))
+  (let* ((without-current-screen (remove (helm-escreen-current-escreen) helm-escreen-name-alist))
          (escreen-num (helm-comp-read "Select an escreen: "
                                       without-current-screen
                                       :alistp t
@@ -74,6 +73,8 @@
   "Get the name of the current screen"
   (interactive)
   (message (car (rassoc (escreen-current-screen-number) helm-escreen-name-alist))))
+
+(add-hook 'escreen-goto-screen-hook (lambda () (run-hooks 'window-configuration-change-hook)) t)
 
 
 (provide 'helm-escreen)
